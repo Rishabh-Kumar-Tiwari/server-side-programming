@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Handling & DOM Manipulation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .hover-effect {
+            padding: 20px;
+            margin: 10px;
+            border: 2px solid #333;
+            display: inline-block;
+            transition: background-color 0.3s ease;
+        }
+        .hover-effect:hover {
+            background-color: lightblue;
+        }
+        #item-list {
+            margin-top: 20px;
+        }
+        .list-item {
+            padding: 8px;
+            background-color: #f4f4f4;
+            margin: 5px;
+            border: 1px solid #ccc;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .list-item button {
+            background-color: red;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Event Handling & DOM Manipulation</h1>
+
+    <!-- 1. Change Text and Style on Button Click -->
+    <button onclick="changeText()">Change Text & Style</button>
+    <p id="textElement">This is the original text.</p>
+
+    <!-- 2. Hover Effect Using JavaScript Events -->
+    <div class="hover-effect" onmouseover="changeColor(this)" onmouseout="resetColor(this)">
+        Hover over me!
+    </div>
+
+    <!-- 3. Dynamic List (Add & Remove Items) -->
+    <h3>Dynamic List</h3>
+    <input type="text" id="newItem" placeholder="Enter item">
+    <button onclick="addItem()">Add Item</button>
+    <div id="item-list"></div>
+
+    <script>
+        // 1. Change Text and Style on Button Click
+        function changeText() {
+            const textElement = document.getElementById("textElement");
+            textElement.innerHTML = "Text has been changed!";
+            textElement.style.color = "green";
+            textElement.style.fontWeight = "bold";
+        }
+
+        // 2. Hover Effect Using JavaScript Events
+        function changeColor(element) {
+            element.style.backgroundColor = "yellow";
+        }
+
+        function resetColor(element) {
+            element.style.backgroundColor = "";
+        }
+
+        // 3. Dynamic List (Add & Remove Items)
+        function addItem() {
+            const newItem = document.getElementById("newItem").value;
+            if (newItem.trim() === "") {
+                alert("Please enter an item.");
+                return;
+            }
+
+            const itemList = document.getElementById("item-list");
+
+            const listItem = document.createElement("div");
+            listItem.className = "list-item";
+            listItem.innerHTML = `
+                ${newItem} 
+                <button onclick="removeItem(this)">Delete</button>
+            `;
+
+            itemList.appendChild(listItem);
+            document.getElementById("newItem").value = "";
+        }
+
+        function removeItem(button) {
+            const itemList = document.getElementById("item-list");
+            itemList.removeChild(button.parentElement);
+        }
+    </script>
+
+</body>
+</html>

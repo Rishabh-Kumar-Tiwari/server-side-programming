@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Objects & AJAX</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        #weather {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+            display: inline-block;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>JavaScript Objects & AJAX</h1>
+
+    <!-- 1. Date Object -->
+    <button onclick="showDateTime()">Show Current Date & Time</button>
+    <p id="dateTime"></p>
+
+    <!-- 2. Math Object -->
+    <button onclick="generateRandomNumber()">Generate Random Number (1-100)</button>
+    <p id="randomNumber"></p>
+
+    <!-- 3. AJAX to Fetch Weather Data -->
+    <button onclick="fetchWeather()">Get Weather (Indore)</button>
+    <div id="weather"></div>
+
+    <script>
+        // 1. Date Object - Display Current Date & Time
+        function showDateTime() {
+            const now = new Date();
+            const dateTimeString = now.toLocaleString();
+            document.getElementById("dateTime").innerText = "Current Date & Time: " + dateTimeString;
+        }
+
+        // 2. Math Object - Generate Random Number (1-100)
+        function generateRandomNumber() {
+            const randomNum = Math.floor(Math.random() * 100) + 1;
+            document.getElementById("randomNumber").innerText = "Random Number: " + randomNum;
+        }
+
+        // 3. AJAX to Fetch Weather Data
+        function fetchWeather() {
+            const apiKey = "ecd3535cdc75e9b8bc832d8900aaaa7f";
+            const city = "Indore";
+            const url = `api.openweathermap.org/data/2.5/forecast?lat=44.34&lon=10.99&appid={apiKey}`;
+
+            const xhr = new XMLHttpRequest();
+            xhr.open("GET", url, true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        const data = JSON.parse(xhr.responseText);
+                        const weatherInfo = `
+                            <h3>Weather in ${data.name}</h3>
+                            <p>Temperature: ${data.main.temp}°C</p>
+                            <p>Condition: ${data.weather[0].description}</p>
+                            <p>Humidity: ${data.main.humidity}%</p>
+                        `;
+                        document.getElementById("weather").innerHTML = weatherInfo;
+                    } else {
+                        document.getElementById("weather").innerHTML = "Error fetching weather data.";
+                    }
+                }
+            };
+            xhr.send();
+        }
+    </script>
+
+</body>
+</html>

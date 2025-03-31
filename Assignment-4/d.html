@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form Validation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        form {
+            width: 300px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        input[type="text"], input[type="email"], input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .error {
+            color: red;
+            font-size: 14px;
+        }
+        .success {
+            color: green;
+            font-size: 16px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Registration Form</h1>
+    <form id="registrationForm" onsubmit="return validateForm()">
+        <input type="text" id="name" placeholder="Full Name" required>
+        <div id="nameError" class="error"></div>
+
+        <input type="email" id="email" placeholder="Email" required>
+        <div id="emailError" class="error"></div>
+
+        <input type="text" id="phone" placeholder="Phone Number" required>
+        <div id="phoneError" class="error"></div>
+
+        <input type="password" id="password" placeholder="Password" required>
+        <div id="passwordError" class="error"></div>
+
+        <button type="submit">Register</button>
+        <div id="successMessage" class="success"></div>
+    </form>
+
+    <script>
+        function validateForm() {
+            // Prevent form submission
+            event.preventDefault();
+
+            // Get input values
+            const name = document.getElementById("name").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const phone = document.getElementById("phone").value.trim();
+            const password = document.getElementById("password").value;
+
+            // Regular Expressions
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            const phoneRegex = /^[0-9]{10}$/;  // 10-digit number
+            const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+            let isValid = true;
+
+            // Name Validation (only letters and spaces)
+            if (!/^[A-Za-z\s]+$/.test(name)) {
+                document.getElementById("nameError").innerText = "Name must contain only letters and spaces.";
+                isValid = false;
+            } else {
+                document.getElementById("nameError").innerText = "";
+            }
+
+            // Email Validation
+            if (!emailRegex.test(email)) {
+                document.getElementById("emailError").innerText = "Invalid email format.";
+                isValid = false;
+            } else {
+                document.getElementById("emailError").innerText = "";
+            }
+
+            // Phone Number Validation
+            if (!phoneRegex.test(phone)) {
+                document.getElementById("phoneError").innerText = "Phone number must be 10 digits.";
+                isValid = false;
+            } else {
+                document.getElementById("phoneError").innerText = "";
+            }
+
+            // Password Validation
+            if (!passwordRegex.test(password)) {
+                document.getElementById("passwordError").innerText = "Password must be at least 8 characters, with uppercase, lowercase, number, and special character.";
+                isValid = false;
+            } else {
+                document.getElementById("passwordError").innerText = "";
+            }
+
+            // Success Message
+            if (isValid) {
+                document.getElementById("successMessage").innerText = "Registration Successful!";
+                return true;
+            } else {
+                document.getElementById("successMessage").innerText = "";
+                return false;
+            }
+        }
+    </script>
+
+</body>
+</html>

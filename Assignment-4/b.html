@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pop-up Boxes Example</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>JavaScript Pop-up Boxes Example</h1>
+
+    <!-- 1. Form Submission Alert -->
+    <button onclick="submitForm()">Submit Form</button>
+
+    <!-- 2. Delete Item Confirmation -->
+    <button onclick="deleteItem('Item 1')">Delete Item 1</button>
+
+    <!-- 3. User Input Prompt -->
+    <button onclick="getUserInput()">Enter Your Name</button>
+
+    <script>
+        // 1. Alert Box on Form Submission
+        function submitForm() {
+            alert("Form submitted successfully!");
+        }
+
+        // 2. Confirm Box Before Deleting an Item
+        function deleteItem(itemName) {
+            let confirmDelete = confirm("Are you sure you want to delete " + itemName + "?");
+            if (confirmDelete) {
+                alert(itemName + " has been deleted.");
+            } else {
+                alert("Deletion canceled.");
+            }
+        }
+
+        // 3. Prompt Box to Get User Input
+        function getUserInput() {
+            let userInput = prompt("Please enter your name:");
+            if (userInput) {
+                document.body.innerHTML += "<p>Hello, " + userInput + "!</p>";
+            } else {
+                alert("No name entered!");
+            }
+        }
+    </script>
+
+</body>
+</html>
